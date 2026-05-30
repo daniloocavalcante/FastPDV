@@ -45,23 +45,31 @@ def listar_produtos():
     conexao.close()
     print("================================")
     
-    
-
-
+  
 
 def excluir_produto():
     listar_produtos()
 
     print("\n======= EXCLUIR PRODUTOS =======")
-    id_produto = input("Digite o ID do produto para excluir: ")
+
+    try:
+        id_produto = int(input("Digite o ID do produto para excluir: "))
+    except ValueError:
+        print("Erro: o ID deve ser um número inteiro!")
+        print("================================")
+        return
 
     conexao = conectar()
     cursor = conexao.cursor()
 
     cursor.execute("DELETE FROM produtos WHERE id = ?", (id_produto,))
 
-    conexao.commit()
+    if cursor.rowcount == 0:
+        print(f"Produto [ID: {id_produto}] não encontrado!")
+    else:
+        conexao.commit()
+        print(f"Produto [ID: {id_produto}] removido com sucesso!")
+
     conexao.close()
 
-    print(f"Produto [ID: {id_produto}] removido com sucesso!")
     print("================================")

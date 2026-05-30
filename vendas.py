@@ -60,8 +60,6 @@ def realizar_venda():
     print("================================")
 
 
-
-
 def listar_vendas():
     conexao = conectar()
     cursor = conexao.cursor()

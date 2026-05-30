@@ -23,8 +23,6 @@ Cliente cadastrado com sucesso!
 """)
 
 
-
-
 def listar_clientes():
     conexao = conectar()
     cursor = conexao.cursor()
@@ -42,20 +40,29 @@ def listar_clientes():
 
 
 
-
 def excluir_cliente():
     listar_clientes()
-    
+
     print("\n======= EXCLUIR CLIENTES =======")
-    id_cliente = input("Digite o ID do cliente para excluir: ")
+
+    try:
+        id_cliente = int(input("Digite o ID do cliente para excluir: "))
+    except ValueError:
+        print("Erro: o ID deve ser um número inteiro!")
+        print("================================")
+        return
 
     conexao = conectar()
     cursor = conexao.cursor()
 
     cursor.execute("DELETE FROM clientes WHERE id = ?", (id_cliente,))
 
-    conexao.commit()
+    if cursor.rowcount == 0:
+        print(f"Cliente [ID: {id_cliente}] não encontrado!")
+    else:
+        conexao.commit()
+        print(f"Cliente [ID: {id_cliente}] removido com sucesso!")
+
     conexao.close()
 
-    print(f"Cliente [ID: {id_cliente}] removido com sucesso!")
     print("================================")
