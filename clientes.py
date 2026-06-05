@@ -1,4 +1,4 @@
-from banco import conectar
+from database.banco import conectar
 
 
 def adicionar_cliente():
@@ -30,13 +30,21 @@ def listar_clientes():
     cursor.execute("SELECT * FROM clientes")
     clientes = cursor.fetchall()
 
-    print("\n======= LISAGEM CLIENTES =======")
+    print("\n=================== CLIENTES ===================\n")
+    print(f"{'ID':<5}{'NOME':<20}{'TELEFONE':<15}{'EMAIL'}")
+    print("-" * 55)
 
     for cliente in clientes:
-        print(f"ID: {cliente[0]} | Nome: {cliente[1]} | Telefone: {cliente[2]}")
+        print(
+            f"{cliente[0]:<5}"
+            f"{cliente[1]:<20}"
+            f"{cliente[2]:<15}"
+            f"{cliente[3]}"
+        )
 
-    conexao.close()    
-    print("================================")
+    print("================================================")
+
+    conexao.close()
 
 
 

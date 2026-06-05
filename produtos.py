@@ -1,4 +1,4 @@
-from banco import conectar
+from database.banco import conectar
 
 
 def adicionar_produto():
@@ -34,16 +34,22 @@ def listar_produtos():
     cursor.execute("SELECT * FROM produtos")
     produtos = cursor.fetchall()
 
-    print("\n======= LISAGEM PRODUTOS =======")
+
+    print("\n=============== LISAGEM PRODUTOS ===============\n")
+    print(f"{'ID':<5}{'PRECO':<10}{'ESTOQUE':<8}{'NOME'}")
+    print("-" * 55)
 
     for produto in produtos:
         print(
-            f"ID: {produto[0]} | Nome: {produto[1]} | "
-            f"Preço: R$ {produto[2]:.2f} | Estoque: {produto[3]}"
-        )    
+            f"{produto[0]:<5}"
+            f"R$ {produto[2]:<10}"
+            f"{produto[3]:<8}"
+            f"{produto[1]}"
+        )
+
+    print("================================================")
 
     conexao.close()
-    print("================================")
     
   
 

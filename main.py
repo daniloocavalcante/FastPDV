@@ -1,5 +1,12 @@
-from banco import criar_tabelas
+from database.banco import conectar
 import os
+
+
+from database.banco import (
+    criar_tabelas,
+    resetar_banco,
+    popular_banco
+)
 
 from clientes import (
     adicionar_cliente,
@@ -89,7 +96,6 @@ def menu_produtos():
 
 
 
-
 def menu_vendas():
     while True:
         limpar_tela()
@@ -121,6 +127,36 @@ def menu_vendas():
             input("\nPressione ENTER para continuar...")
 
 
+def configs():
+    while True:
+        limpar_tela()
+
+        print("""
+=========== CONFIGURAÇÕES ===========
+1 - Criar Banco de Dados
+2 - Popular Banco de Dados
+3 - Resetar Banco de Dados
+0 - Voltar
+=====================================
+""")
+
+        opcao = input("Escolha uma opção: ")
+        if opcao == "0":
+            break        
+
+        acoes = {
+            "1": criar_tabelas,
+            "2": popular_banco,
+            "3": resetar_banco,
+        }
+
+        if acoes.get(opcao):
+            acoes.get(opcao)()
+            input("\nPressione ENTER para voltar...")
+
+        else:
+            print("Opção inválida!")
+            input("\nPressione ENTER para continuar...")
 
 
 def main():
@@ -133,9 +169,10 @@ def main():
 ===================================
             SISTEMA PDV
 ===================================
-1 - Gerenciar Clientes
-2 - Gerenciar Produtos
+1 - Clientes
+2 - Produtos
 3 - Vendas
+4 - Configurações
 0 - Sair
 ===================================
 """)
@@ -149,6 +186,7 @@ def main():
             "1": menu_clientes,
             "2": menu_produtos,
             "3": menu_vendas,
+            "4": configs,
         }
 
         if acoes.get(opcao):
