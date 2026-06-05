@@ -7,6 +7,7 @@ def realizar_venda():
     conexao = conectar()
     cursor = conexao.cursor()
 
+    print("=" * 30)
     cliente_id = int(input("ID do cliente: "))
 
     cursor.execute(
@@ -28,10 +29,12 @@ def realizar_venda():
 
     total_venda = 0
 
-    while True:
-        print("\nDigite 0 para finalizar a venda.")
+    print("\nDigite 0 para finalizar a venda.\n")
 
-        produto_id = int(input("ID do produto: "))
+    print("=" * 30)
+
+    while True:
+        produto_id = int(input("Digite o ID do produto: "))
 
         if produto_id == 0:
             break
@@ -45,7 +48,7 @@ def realizar_venda():
         produto = cursor.fetchone()
 
         if not produto:
-            print("Produto não encontrado.")
+            print("Produto não encontrado.\n")
             continue
 
         nome, preco, estoque = produto
@@ -57,11 +60,11 @@ def realizar_venda():
         quantidade = int(input("Quantidade: "))
 
         if quantidade <= 0:
-            print("Quantidade inválida.")
+            print("Quantidade inválida.\n")
             continue
 
         if quantidade > estoque:
-            print("Estoque insuficiente.")
+            print("Estoque insuficiente.\n")
             continue
 
         subtotal = preco * quantidade
@@ -92,6 +95,7 @@ def realizar_venda():
             f"Item adicionado. "
             f"Subtotal: R$ {subtotal:.2f}"
         )
+        print("=" * 30)        
 
     cursor.execute("""
         UPDATE vendas
@@ -108,6 +112,7 @@ def realizar_venda():
     print("\nVenda finalizada!")
     print(f"ID da venda: {venda_id}")
     print(f"Total: R$ {total_venda:.2f}")
+    print("=" * 30)
 
 
 def listar_vendas():
